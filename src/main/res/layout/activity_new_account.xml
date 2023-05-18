@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:contentDescription="quiz-logo"
+        android:src="@drawable/main_logo"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/layout_bg"
+        android:orientation="vertical"
+        android:paddingTop="50px"
+        android:paddingBottom="50px"
+        android:paddingLeft="100px"
+        android:paddingRight="100px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.322"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/activity_new_account_emailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EMAIL"
+            android:padding="10px"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/activity_new_account_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/activity_new_account_loginText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LOGIN"
+            android:padding="10px"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/activity_new_account_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/activity_new_account_passwordText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HASŁO"
+            android:padding="10px"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/activity_new_account_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/activity_new_account_passwordAgainText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="POWTÓRZ HASŁO"
+            android:padding="10px"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/activity_new_account_passwordAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/activity_new_account_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:padding="30px"
+            android:textColor="@color/red"
+            android:textAlignment="center"
+            android:textSize="10dp"/>
+
+        <Button
+            android:id="@+id/activity_new_account_registerButton"
+            android:padding="10px"
+            android:onClick="register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ZAREJESTRUJ" />
+
+        <TextView
+            android:id="@+id/activity_new_account_backToLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="POWRÓT DO LOGOWANIA"
+            android:onClick="backToLogin"
+            android:paddingTop="30px"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textSize="10dp"/>
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
