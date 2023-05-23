@@ -1,7 +1,9 @@
 package com.example.quiz_app
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
+
 
 @Dao
 interface GameDao {
@@ -12,12 +14,11 @@ interface GameDao {
     @Delete
     suspend fun deleteContact(contact: Question)
 
-    @Query("SELECT * FROM question ORDER BY firstName ASC")
-    fun getContactsOrderedByFirstName(): Flow<List<Question>>
+    @Query("SELECT count() FROM Stats where ID = :user_id")
+    fun getStatsForUser(user_id: Int?): LiveData<Stats?>?
 
-    @Query("SELECT * FROM question ORDER BY lastName ASC")
-    fun getContactsOrderedByLastName(): Flow<List<Question>>
-
-    @Query("SELECT * FROM question ORDER BY phoneNumber ASC")
-    fun getContactsOrderedByPhoneNumber(): Flow<List<Question>>
+    @Transaction
+    fun getStatsForUser(user: User): LiveData<Stats?>? {
+        return getStatsForUser(user.id)
+    }
 }
