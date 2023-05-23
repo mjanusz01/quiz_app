@@ -14,3 +14,21 @@ data class Question(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 )
+
+
+@Entity(tableName = "Stats")
+data class Stats(
+    val badAnwserNum: Int,
+    val goodAnswerNum : Int,
+    @PrimaryKey(autoGenerate = false)
+    val id: Int = 0
+)
+
+@Entity(tableName = "User")
+data class User(
+    var login: String,
+    var email: String,
+    var passwordHash: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0
+)
