@@ -7,17 +7,17 @@ import kotlinx.coroutines.flow.Flow
 interface GameDao {
 
     @Upsert
-    suspend fun upsertContact(contact: Game)
+    suspend fun upsertContact(contact: Question)
 
     @Delete
-    suspend fun deleteContact(contact: Game)
+    suspend fun deleteContact(contact: Question)
 
-    @Query("SELECT * FROM game ORDER BY firstName ASC")
-    fun getContactsOrderedByFirstName(): Flow<List<Game>>
+    @Query("SELECT * FROM question ORDER BY firstName ASC")
+    fun getContactsOrderedByFirstName(): Flow<List<Question>>
 
-    @Query("SELECT * FROM game ORDER BY lastName ASC")
-    fun getContactsOrderedByLastName(): Flow<List<Game>>
+    @Query("SELECT * FROM question ORDER BY lastName ASC")
+    fun getContactsOrderedByLastName(): Flow<List<Question>>
 
-    @Query("SELECT * FROM game ORDER BY phoneNumber ASC")
-    fun getContactsOrderedByPhoneNumber(): Flow<List<Game>>
+    @Query("SELECT * FROM question ORDER BY phoneNumber ASC")
+    fun getContactsOrderedByPhoneNumber(): Flow<List<Question>>
 }
