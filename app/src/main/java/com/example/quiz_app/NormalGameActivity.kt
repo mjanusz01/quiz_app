@@ -9,60 +9,61 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import java.util.*
-import kotlin.math.max
-
-var range = 10
-var maxTime = 30000
-var actualTime = maxTime
-var goodAnswers = 0
-var finished = false
-var wrongAnswers = 0
-lateinit var question : Question
-
 class NormalGameActivity : AppCompatActivity() {
+
+    private lateinit var timer: CountDownTimer
+    var range = 10
+    var maxTime = 1000000
+    var actualTime = maxTime
+    var goodAnswers = 0
+    var wrongAnswers = 0
+    lateinit var questionVar : Question
+    lateinit var login: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.v("NEW","CREATE")
+        resetData()
+        login = intent.getStringExtra("login").toString()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_normal_game)
-        question = nextQuestion()
-        fixTimer()
-        resetData()
+        findViewById<TextView>(R.id.normal_game_pointCounter).text = "0/0"
+        questionVar = nextQuestion()
+        timer = fixTimer()
+        Log.v("login - ", login)
     }
 
-    fun resetData(){
+    private fun resetData(){
         range = 10
-        maxTime = 30000
+        maxTime = 100000000
         actualTime = maxTime
         goodAnswers = 0
         wrongAnswers = 0
-        finished = false
     }
 
-    fun startSummary(){
+    private fun startSummary(){
         val intent = Intent(this,SummaryActivity::class.java)
         intent.putExtra("good_answers", goodAnswers)
         intent.putExtra("wrong_answers", wrongAnswers)
-        intent.putExtra("time", (maxTime - actualTime))
+        intent.putExtra("time", (actualTime))
+        intent.putExtra("login", login)
+        intent.putExtra("gametype","normal_game")
         startActivity(intent)
         finish()
     }
 
-    private fun fixTimer(){
-        val timer = object: CountDownTimer(30000, 10) {
+    private fun fixTimer(): CountDownTimer {
+        val timer = object: CountDownTimer(maxTime.toLong(), 10) {
             @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
-                findViewById<TextView>(R.id.timeCounter).text = (millisUntilFinished/1000).toString() + "s"
-                actualTime = millisUntilFinished.toInt()
+                findViewById<TextView>(R.id.timeCounter).text = ((maxTime-millisUntilFinished)/1000).toString() + "s"
+                actualTime = maxTime-millisUntilFinished.toInt()
             }
 
             override fun onFinish() {
-                if(!finished) {
-                    Log.v("FINISHED", "FINISHED")
-                    startSummary()
-                }
+                cancel()
             }
         }
         timer.start()
+        return timer
     }
 
     @SuppressLint("SetTextI18n")
@@ -80,44 +81,29 @@ class NormalGameActivity : AppCompatActivity() {
 
     private fun getQuestion(): Question {
         val random = Random()
-        val questions = testQuestions()
+        val questions = getQuestionsFromDatabase()
         val randomIndex = random.nextInt(questions.size)
         return questions[randomIndex]
     }
 
-    private fun testQuestions() : ArrayList<Question>{
-        var questions = ArrayList<Question>()
-
-        questions.add(Question("Ile to jest 2 + 2", "1", "2", "3", "4",1))
-        questions.add(Question("Podaj liczbę 7", "1", "2", "7", "4",2))
-        questions.add(Question("W Polsce mówi się po:", "polsku", "angielsku", "szwedzku", "bułgarsku",0))
-        questions.add(Question("10 - 2 = ?", "cztery", "siedem", "dwa", "osiem",3))
-        questions.add(Question(
-            "Bardzo długie pytanie. Dlaczego tak jest a nie inaczej, że w Polsce taka bieda i wgl? Dlaczego nie stać mnie na rzeczy które bym chciał kupić?" ,
-            "Nie wiadomo dlaczego, bieda jest panie",
-            "Wiadomo, rząd jest zły",
-            "Odpowiedź długa. To nie jest tak, że jest dobrze lub niedobrze.",
-        "Odpowiedź dla niezdecydowanych",
-            3
-        ))
-        return questions
+    private fun getQuestionsFromDatabase(): List<Question> {
+        val db = QuestionDBDatabase.getInstance(applicationContext)
+        return db.questionDao().getAllquestionData()
     }
-
     fun answer1(view: View) {
-        checkAnswerForIndex(0)
-    }
-    fun answer2(view: View) {
         checkAnswerForIndex(1)
     }
-    fun answer3(view: View) {
+    fun answer2(view: View) {
         checkAnswerForIndex(2)
     }
-    fun answer4(view: View) {
+    fun answer3(view: View) {
         checkAnswerForIndex(3)
     }
-
-    fun checkAnswerForIndex(index: Int){
-        if(question.goodAnswerIndex == index){
+    fun answer4(view: View) {
+        checkAnswerForIndex(4)
+    }
+    private fun checkAnswerForIndex(index: Int){
+        if(questionVar.goodAnswerIndex == index){
             goodAnswers++
         }
         else{
@@ -125,11 +111,17 @@ class NormalGameActivity : AppCompatActivity() {
         }
 
         if(goodAnswers+ wrongAnswers == range){
-            finished = true
+            timer.cancel()
             startSummary()
         }
         else {
-            question = nextQuestion()
+            questionVar = nextQuestion()
         }
     }
+    fun backToMenu(view: View) {
+        val myIntent = Intent(this,MainMenuActivity::class.java)
+        myIntent.putExtra("login",login)
+        startActivity(myIntent)
+    }
+
 }

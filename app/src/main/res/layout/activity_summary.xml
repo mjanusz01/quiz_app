@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20px"
-            android:text="ILOSC PYTAN"
+            android:text="ILOŚĆ PYTAN"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="15dp" />
@@ -82,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="20px"
-            android:text="ILOSC PYTAN"
+            android:text="CZAS"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="15dp" />

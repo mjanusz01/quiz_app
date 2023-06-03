@@ -14,16 +14,16 @@ data class Question(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 )
-
-
 @Entity(tableName = "Stats")
 data class Stats(
-    val badAnwserNum: Int,
+    val login: String,
+    val badAnswerNum: Int,
     val goodAnswerNum : Int,
+    val gametype: String,
+    val time: Int,
     @PrimaryKey(autoGenerate = false)
     val id: Int = 0
 )
-
 @Entity(tableName = "User")
 data class User(
     var login: String,

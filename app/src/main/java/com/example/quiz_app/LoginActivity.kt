@@ -12,14 +12,14 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import org.w3c.dom.Text
+import java.io.File
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-        //TODO: połączenie z bazą danych
     }
 
     fun newAccountClick(view: View) {
@@ -32,41 +32,39 @@ class LoginActivity : AppCompatActivity() {
             result -> val data = result.data
 
         resetFields()
-
-        // handle data
     }
 
     private var mainMenuResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             result -> val data = result.data
 
         resetFields()
-
-        // handle data
     }
 
     fun login(view: View) {
+        val db = MyDatabase.getInstance(applicationContext)
+        val login = findViewById<EditText>(R.id.activity_login_login).text.toString()
+        val password = findViewById<EditText>(R.id.activity_login_password).text.toString()
 
-        val login = findViewById<EditText>(R.id.activity_login_login).text
-        val password = findViewById<EditText>(R.id.activity_login_password).text
+        val user = db.userDao().getUserByLoginAndPassword(login,password)
 
-        //TODO: obsługa danych (jeśli ok to zaloguj, jeśli nie to wywal błąd)
-
-        val error = false
-
-        if(error){
-            findViewById<TextView>(R.id.activity_login_error).text = "BŁĘDNE DANE LOGOWANIA"
+        if(user == null){
+            resetFields()
+            findViewById<TextView>(R.id.activity_login_error).text = "Błędne dane logowania."
         }
         else{
             val newAccountIntent = Intent(this,MainMenuActivity::class.java)
-
+            newAccountIntent.putExtra("login",login)
             mainMenuResultLauncher.launch(newAccountIntent)
         }
     }
 
     private fun resetFields(){
-
         findViewById<EditText>(R.id.activity_login_login).setText("", TextView.BufferType.EDITABLE)
         findViewById<EditText>(R.id.activity_login_password).setText("", TextView.BufferType.EDITABLE)
         findViewById<TextView>(R.id.activity_login_error).text = ""
     }
+
+
+
+
 }

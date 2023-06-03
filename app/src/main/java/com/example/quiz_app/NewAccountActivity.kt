@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -11,10 +12,9 @@ import android.widget.TextView
 class NewAccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_new_account)
     }
-
-
 
     fun backToLogin(view: View) {
         finishActivity()
@@ -22,19 +22,39 @@ class NewAccountActivity : AppCompatActivity() {
 
     fun register(view: View) {
 
-        val email = findViewById<EditText>(R.id.activity_new_account_email).text
-        val login = findViewById<EditText>(R.id.activity_new_account_login).text
-        val password = findViewById<EditText>(R.id.activity_new_account_password).text
-        val passwordAgain = findViewById<EditText>(R.id.activity_new_account_passwordAgain).text
+        val db = MyDatabase.getInstance(applicationContext)
 
-        //TODO: obsługa danych (jeśli ok to zaloguj, jeśli nie to wywal błąd)
-        val error = false
+        val email = findViewById<EditText>(R.id.activity_new_account_email).text.toString()
+        val login = findViewById<EditText>(R.id.activity_new_account_login).text.toString()
+        val password = findViewById<EditText>(R.id.activity_new_account_password).text.toString()
+        val passwordAgain = findViewById<EditText>(R.id.activity_new_account_passwordAgain).text.toString()
+
+        var error = false
+        var errorMessage = ""
+        val userByLogin = db.userDao().getCountForLogin(login)
+        val userByEmail = db.userDao().getCountForEmail(email)
+
+        if(password != passwordAgain){
+            error = true
+            errorMessage = "Podane hasła nie są identyczne."
+        }
+
+        if(userByLogin != 0 || userByEmail != 0){
+            error = true
+            errorMessage = "Użytkownik o podanym loginie lub emailu już istnieje."
+        }
+
+        if(email == "" || login == "" || password == "" || passwordAgain == ""){
+            error = true
+            errorMessage = "Uzupełnij wszystkie pola."
+        }
 
         if(error){
-            findViewById<TextView>(R.id.activity_new_account_error).text = "BŁĘDNE DANE LOGOWANIA"
+            findViewById<TextView>(R.id.activity_new_account_error).text = errorMessage
             resetFields()
         }
         else{
+            db.userDao().insert(User(login,email,password))
             finishActivity()
         }
     }

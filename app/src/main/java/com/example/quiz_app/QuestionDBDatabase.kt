@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import java.io.File
 
 @Database(entities = [Question::class, Stats::class, User::class], version = 1)
-abstract class MyDatabase : RoomDatabase() {
+abstract class QuestionDBDatabase : RoomDatabase() {
     abstract fun questionDao(): QuestionDao
     abstract fun statsDao(): StatsDao
     abstract fun userDao(): UserDao
@@ -21,10 +21,8 @@ abstract class MyDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     MyDatabase::class.java,
-                    "GameAppDatabase.db"
-                ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
-                    //createFromAsset("databases/asset.db")//
-
+                    "GameAppDatabase2.db"
+                ).allowMainThreadQueries().fallbackToDestructiveMigration().createFromAsset("databases/asset.db").build()
                 INSTANCE = instance
                 instance
             }
