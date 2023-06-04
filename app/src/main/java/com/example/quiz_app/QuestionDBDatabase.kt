@@ -6,12 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import java.io.File
 
-@Database(entities = [Question::class, Stats::class, User::class], version = 1)
+@Database(entities = [Question::class], version = 1)
 abstract class QuestionDBDatabase : RoomDatabase() {
     abstract fun questionDao(): QuestionDao
-    abstract fun statsDao(): StatsDao
-    abstract fun userDao(): UserDao
-
     companion object {
         @Volatile
         private var INSTANCE: MyDatabase? = null

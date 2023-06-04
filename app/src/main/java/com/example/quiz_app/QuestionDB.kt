@@ -16,23 +16,5 @@ class QuestionDB {
         @PrimaryKey(autoGenerate = true)
         val id: Int = 0
     )
-    @Entity(tableName = "Stats")
-    data class Stats(
-        val login: String,
-        val badAnswerNum: Int,
-        val goodAnswerNum : Int,
-        val gametype: String,
-        val time: Int,
-        @PrimaryKey(autoGenerate = false)
-        val id: Int = 0
-    )
-    @Entity(tableName = "User")
-    data class User(
-        var login: String,
-        var email: String,
-        var passwordHash: String,
-        @PrimaryKey(autoGenerate = true)
-        val id: Int = 0
-    )
 
 }

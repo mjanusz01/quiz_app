@@ -21,44 +21,4 @@ class QuestionDBDao {
         fun getAllquestionData(): List<Question>
     }
 
-    @Dao
-    interface StatsDao {
-        @Insert
-        fun insert(stats: Stats)
-
-        @Update
-        fun update(stats: Stats)
-
-        @Delete
-        fun delete(stats: Stats)
-
-        @Query("SELECT COUNT(*) FROM Stats;")
-        fun getCount(): Int
-
-    }
-
-    @Dao
-    interface UserDao {
-        @Insert
-        fun insert(user: User)
-
-        @Update
-        fun update(user: User)
-
-        @Delete
-        fun delete(user: User)
-
-        @Query("SELECT COUNT(*) FROM User WHERE login = :login;")
-        fun getCountForLogin(login: String): Int
-
-        @Query("SELECT COUNT(*) FROM User WHERE email = :email;")
-        fun getCountForEmail(email: String): Int
-
-        @Query("SELECT COUNT(*) FROM User")
-        fun getAllUsersCount(): Int
-
-        @Query("SELECT * FROM User WHERE login = :login AND passwordHash = :password;")
-        fun getUserByLoginAndPassword(login: String, password: String): User
-
-    }
 }
