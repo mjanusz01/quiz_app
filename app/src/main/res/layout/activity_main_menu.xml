@@ -67,16 +67,6 @@
             android:text="GRA NA CZAS" />
 
         <Button
-            android:id="@+id/activity_main_menu_multiplayerGameButton"
-            android:padding="30px"
-            android:layout_width="match_parent"
-            android:textSize = "50px"
-            android:backgroundTint="@color/purple_200"
-            android:onClick="login"
-            android:layout_height="wrap_content"
-            android:text="MULTIPLAYER" />
-
-        <Button
             android:id="@+id/activity_main_menu_stats"
             android:padding="30px"
             android:layout_width="match_parent"

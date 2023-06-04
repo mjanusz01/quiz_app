@@ -19,6 +19,10 @@ class StatisticAdapter(private val stats: ArrayList<Stats>): RecyclerView.Adapte
         val points: TextView
         val answers: TextView
         val time: TextView
+        val gametype_text: TextView
+        val points_text: TextView
+        val time_text: TextView
+        val answers_text: TextView
         val layout: ConstraintLayout
 
         init {
@@ -26,6 +30,10 @@ class StatisticAdapter(private val stats: ArrayList<Stats>): RecyclerView.Adapte
             points = itemView.findViewById(R.id.stats_points)
             answers = itemView.findViewById(R.id.stats_answers)
             time = itemView.findViewById(R.id.stats_time)
+            gametype_text = itemView.findViewById(R.id.stats_gametype_text)
+            points_text = itemView.findViewById(R.id.stats_points_text)
+            answers_text = itemView.findViewById(R.id.stats_answers_text)
+            time_text = itemView.findViewById(R.id.stats_time_text)
             layout = itemView.findViewById(R.id.layoutId)
         }
     }
@@ -37,6 +45,7 @@ class StatisticAdapter(private val stats: ArrayList<Stats>): RecyclerView.Adapte
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         if(position%2==0){
             holder.layout.setBackgroundColor(Color.parseColor("#FF382876"))
         }
