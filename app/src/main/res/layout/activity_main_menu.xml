@@ -81,7 +81,7 @@
             android:padding="30px"
             android:layout_width="match_parent"
             android:textSize = "50px"
-            android:onClick="login"
+            android:onClick="statsButton"
             android:layout_height="wrap_content"
             android:text="STATYSTYKI"/>
 

@@ -32,6 +32,11 @@ class MainMenuActivity : AppCompatActivity() {
         intent.putExtra("login", login)
         startActivity(intent)
     }
+
+    fun statsButton(view: View) {
+        val intent = Intent(this,StatsActivity::class.java)
+        startActivity(intent)
+    }
     fun backToLogin(view: View) {
         val intent = Intent(this,LoginActivity::class.java)
         startActivity(intent)
