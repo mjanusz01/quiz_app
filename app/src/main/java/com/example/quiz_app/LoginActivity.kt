@@ -16,6 +16,10 @@ import androidx.room.Room
 import org.w3c.dom.Text
 import java.io.File
 
+val TOKEN = "TOKEN"
+lateinit var loginText: String
+lateinit var password: String
+
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +46,10 @@ class LoginActivity : AppCompatActivity() {
 
     fun login(view: View) {
         val db = MyDatabase.getInstance(applicationContext)
-        val login = findViewById<EditText>(R.id.activity_login_login).text.toString()
-        val password = findViewById<EditText>(R.id.activity_login_password).text.toString()
+        loginText = findViewById<EditText>(R.id.activity_login_login).text.toString()
+        password = findViewById<EditText>(R.id.activity_login_password).text.toString()
 
-        val user = db.userDao().getUserByLoginAndPassword(login,password)
+        val user = db.userDao().getUserByLoginAndPassword(loginText,password)
 
         if(user == null){
             resetFields()
@@ -53,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
         }
         else{
             val newAccountIntent = Intent(this,MainMenuActivity::class.java)
-            newAccountIntent.putExtra("login",login)
+            newAccountIntent.putExtra("login",loginText)
             mainMenuResultLauncher.launch(newAccountIntent)
         }
     }
@@ -63,8 +67,25 @@ class LoginActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.activity_login_password).setText("", TextView.BufferType.EDITABLE)
         findViewById<TextView>(R.id.activity_login_error).text = ""
     }
+    override fun onSaveInstanceState(outState: Bundle) {
 
+        loginText = findViewById<EditText>(R.id.activity_login_login).text.toString()
+        password = findViewById<EditText>(R.id.activity_login_password).text.toString()
 
+        super.onSaveInstanceState(outState)
 
+        outState.run{
+            putString("login", loginText)
+            putString("password",password)
+        }
+    }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+
+        super.onRestoreInstanceState(savedInstanceState)
+
+        loginText = savedInstanceState.get("login") as String
+        password = savedInstanceState.get("password") as String
+
+    }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import java.util.*
 class NormalGameActivity : AppCompatActivity() {
@@ -46,6 +47,11 @@ class NormalGameActivity : AppCompatActivity() {
         intent.putExtra("time", (actualTime))
         intent.putExtra("login", login)
         intent.putExtra("gametype","normal_game")
+
+        val db = MyDatabase.getInstance(applicationContext)
+        val stats = Stats(login,wrongAnswers,goodAnswers,"normal_game",actualTime,(goodAnswers*100000)/actualTime)
+        db.statsDao().insert(stats)
+
         startActivity(intent)
         finish()
     }
@@ -123,5 +129,4 @@ class NormalGameActivity : AppCompatActivity() {
         myIntent.putExtra("login",login)
         startActivity(myIntent)
     }
-
 }

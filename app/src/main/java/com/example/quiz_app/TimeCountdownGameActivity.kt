@@ -47,6 +47,10 @@ class TimeCountdownGameActivity : AppCompatActivity() {
         intent.putExtra("time", (maxTimeTime - actualTimeTime))
         intent.putExtra("login",login)
         intent.putExtra("gametype","time_game")
+
+        val db = MyDatabase.getInstance(applicationContext)
+        val stats = Stats(login,wrongAnswersTime,goodAnswersTime,"normal_game",actualTimeTime,(goodAnswersTime*100000)/actualTimeTime)
+        db.statsDao().insert(stats)
         startActivity(intent)
         finish()
     }

@@ -8,8 +8,15 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import kotlin.properties.Delegates
 
 class NewAccountActivity : AppCompatActivity() {
+
+    lateinit var email: String
+    lateinit var login: String
+    lateinit var password: String
+    lateinit var passwordAgain: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -24,10 +31,10 @@ class NewAccountActivity : AppCompatActivity() {
 
         val db = MyDatabase.getInstance(applicationContext)
 
-        val email = findViewById<EditText>(R.id.activity_new_account_email).text.toString()
-        val login = findViewById<EditText>(R.id.activity_new_account_login).text.toString()
-        val password = findViewById<EditText>(R.id.activity_new_account_password).text.toString()
-        val passwordAgain = findViewById<EditText>(R.id.activity_new_account_passwordAgain).text.toString()
+        email = findViewById<EditText>(R.id.activity_new_account_email).text.toString()
+        login = findViewById<EditText>(R.id.activity_new_account_login).text.toString()
+        password = findViewById<EditText>(R.id.activity_new_account_password).text.toString()
+        passwordAgain = findViewById<EditText>(R.id.activity_new_account_passwordAgain).text.toString()
 
         var error = false
         var errorMessage = ""
@@ -70,5 +77,36 @@ class NewAccountActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.activity_new_account_login).setText("", TextView.BufferType.EDITABLE)
         findViewById<EditText>(R.id.activity_new_account_password).setText("", TextView.BufferType.EDITABLE)
         findViewById<EditText>(R.id.activity_new_account_passwordAgain).setText("", TextView.BufferType.EDITABLE)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+
+        email = findViewById<EditText>(R.id.activity_new_account_email).text.toString()
+        login = findViewById<EditText>(R.id.activity_new_account_login).text.toString()
+        password = findViewById<EditText>(R.id.activity_new_account_password).text.toString()
+        passwordAgain = findViewById<EditText>(R.id.activity_new_account_passwordAgain).text.toString()
+        super.onSaveInstanceState(outState)
+
+        outState.run{
+            putString("email",email)
+            putString("login", loginText)
+            putString("password",password)
+            putString("password_again",passwordAgain)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+
+        super.onRestoreInstanceState(savedInstanceState)
+
+        email = savedInstanceState.get("email") as String
+        login = savedInstanceState.get("login") as String
+        password = savedInstanceState.get("password") as String
+        passwordAgain = savedInstanceState.get("password_again") as String
+
+        findViewById<EditText>(R.id.activity_new_account_email).setText(email, TextView.BufferType.EDITABLE)
+        findViewById<EditText>(R.id.activity_new_account_login).setText(login, TextView.BufferType.EDITABLE)
+        findViewById<EditText>(R.id.activity_new_account_password).setText(password, TextView.BufferType.EDITABLE)
+        findViewById<EditText>(R.id.activity_new_account_passwordAgain).setText(passwordAgain, TextView.BufferType.EDITABLE)
     }
 }

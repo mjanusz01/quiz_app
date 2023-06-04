@@ -21,7 +21,8 @@ data class Stats(
     val goodAnswerNum : Int,
     val gametype: String,
     val time: Int,
-    @PrimaryKey(autoGenerate = false)
+    val points: Int,
+    @PrimaryKey(autoGenerate = true)
     val id: Int = 0
 )
 @Entity(tableName = "User")

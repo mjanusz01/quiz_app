@@ -63,6 +63,7 @@ class StatisticAdapter(private val stats: ArrayList<Stats>): RecyclerView.Adapte
         }
         holder.answers.text = stats[position].goodAnswerNum.toString() + "/" + (stats[position].badAnswerNum+stats[position].goodAnswerNum).toString()
         holder.time.text = stats[position].time.toString() + "s"
+        holder.points.text = stats[position].points.toString()
     }
 
     override fun getItemCount() = (stats.size)
