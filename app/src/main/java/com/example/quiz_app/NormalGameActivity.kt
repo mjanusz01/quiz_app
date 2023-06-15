@@ -116,7 +116,7 @@ class NormalGameActivity : AppCompatActivity() {
             wrongAnswers++
         }
 
-        if(goodAnswers+ wrongAnswers == range){
+        if(goodAnswers + wrongAnswers == range){
             timer.cancel()
             startSummary()
         }

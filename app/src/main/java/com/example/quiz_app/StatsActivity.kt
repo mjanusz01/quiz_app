@@ -21,7 +21,7 @@ class StatsActivity : AppCompatActivity() {
         login = intent.getStringExtra("login").toString()
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val db = MyDatabase.getInstance(applicationContext)
-        val stats = db.statsDao().getAllData()
+        val stats = db.statsDao().getAllData(login)
         Log.v("SIZE", stats.size.toString())
 
         adapter = StatisticAdapter(stats as ArrayList<Stats>)

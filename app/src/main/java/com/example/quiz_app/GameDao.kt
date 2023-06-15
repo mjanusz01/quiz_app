@@ -32,8 +32,8 @@ interface StatsDao {
     @Query("SELECT COUNT(*) FROM Stats;")
     fun getCount(): Int
 
-    @Query("SELECT * FROM Stats;")
-    fun getAllData(): List<Stats>
+    @Query("SELECT * FROM Stats where login = :login;")
+    fun getAllData(login: String): List<Stats>
 
 }
 
